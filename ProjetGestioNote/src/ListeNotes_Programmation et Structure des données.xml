@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<listeNotes>
+	<module>
+		<nom>Programmation et Structure des données</nom>
+		<code>GINF301</code>
+		<classe>Génie Informatique I</classe>
+		<matieres>
+			<matiere enseignant="BOUDAA TARIK" id="1" titre="Programmation C" />
+			<matiere enseignant="BOUDAA TARIK" id="2" titre="Structure des donnees" />
+			<matiere enseignant="FAID MED" id="3" titre="Algorithmique" />
+		</matieres>
+	</module>
+	<notes>
+		<etudiant>
+			<cne>212121211</cne>
+			<nom>BOUDAA</nom>
+			<prenom>TARIK</prenom>
+			<matiere id="1">
+				<noteSN>10.0</noteSN>
+				<noteSR>20.0</noteSR>
+			</matiere>
+			<matiere id="2">
+				<noteSN>9.0</noteSN>
+				<noteSR>12.0</noteSR>
+			</matiere>
+			<matiere id="3">
+				<noteSN>9.0</noteSN>
+				<noteSR>12.0</noteSR>
+			</matiere>
+			<moyenne>14.0</moyenne>
+			<validation>V</validation>
+		</etudiant>
+		<etudiant>
+			<cne>21213231</cne>
+			<nom>Karmi</nom>
+			<prenom>Salami</prenom>
+			<matiere id="1">
+				<noteSN>9.0</noteSN>
+				<noteSR>12.0</noteSR>
+			</matiere>
+			<matiere id="2">
+				<noteSN>9.0</noteSN>
+				<noteSR>12.0</noteSR>
+			</matiere>
+			<matiere id="3">
+				<noteSN>2.0</noteSN>
+				<noteSR>12.0</noteSR>
+			</matiere>
+			<moyenne>12.0</moyenne>
+			<validation>V</validation>
+		</etudiant>
+		<etudiant>
+			<cne>212121211</cne>
+			<nom>El OUalidi</nom>
+			<prenom>Nafiaa</prenom>
+			<matiere id="1">
+				<noteSN>9.0</noteSN>
+				<noteSR>12.0</noteSR>
+			</matiere>
+			<matiere id="2">
+				<noteSN>9.0</noteSN>
+				<noteSR>12.0</noteSR>
+			</matiere>
+			<matiere id="3">
+				<noteSN>7.0</noteSN>
+				<noteSR>12.0</noteSR>
+			</matiere>
+			<moyenne>12.0</moyenne>
+			<validation>V</validation>
+		</etudiant>
+	</notes>
+</listeNotes>
