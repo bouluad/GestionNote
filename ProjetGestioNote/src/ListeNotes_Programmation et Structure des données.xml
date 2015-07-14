@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <listeNotes>
 	<module>
-	<!--test  -->
 		<nom>Programmation et Structure des données</nom>
 		<code>GINF301</code>
 		<classe>Génie Informatique I</classe>
