@@ -12,6 +12,7 @@ public class Module {
 	private String code;
 	private String intitule;
 	private String version;
+	private Long idClasse;
 	private List<Matiere> matieres;
 	
 	public Module() {
@@ -27,13 +28,22 @@ public class Module {
 		this.id = id;
 	}
 	
-	
+
 	public Module(Long id, String code, String intitule, String version) {
 		super();
 		this.id = id;
 		this.code = code;
 		this.intitule = intitule;
 		this.version = version;
+	}
+	
+	public Module(Long id, String code, String intitule, String version,Long idClasse) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.intitule = intitule;
+		this.version = version;
+		this.idClasse=idClasse;
 	}
 	
 	
@@ -67,6 +77,14 @@ public class Module {
 	public void setMatieres(List<Matiere> matieres) {
 		this.matieres = matieres;
 	}
-	
 
+	public Long getIdClasse() {
+		return idClasse;
+	}
+
+	public void setIdClasse(Long idClasse) {
+		this.idClasse = idClasse;
+	}
+	
+	
 }

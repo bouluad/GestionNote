@@ -26,7 +26,7 @@ import com.gestion.note.db.DataBaseException;
 /**
  * cette classe permet de choisir une classe et un module
  * à l'aide d'une boite de dialogue
- * @author BOULUAD
+ *
  *
  */
 public class DialogChoixMatiere2 extends JDialog implements ItemListener, ActionListener

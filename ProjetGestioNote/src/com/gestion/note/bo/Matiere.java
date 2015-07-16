@@ -11,15 +11,18 @@ public class Matiere {
 	private int nbrheure;
 	private double coeff;
 	private Long idProf;
+	private Long idModule;
 	
 	
-	public Matiere(Long id, String intitule, int nbrheure, double coeff,Long idProf) {
+	public Matiere(Long id ,Long idModule,String intitule, int nbrheure, double coeff,Long idProf) {
 	
 		this.id = id;
 		this.intitule = intitule;
 		this.nbrheure = nbrheure;
 		this.coeff = coeff;
 		this.idProf=idProf;
+		this.idModule=idModule;
+
 	}
 	public Matiere(Long id, String intitule, int nbrheure, double coeff) {
 		
@@ -29,6 +32,7 @@ public class Matiere {
 		this.coeff = coeff;
 
 	}
+	
 	
 	public Long getId() {
 		return id;
@@ -63,6 +67,12 @@ public class Matiere {
 
 	public void setIdProf(Long idProf) {
 		this.idProf = idProf;
+	}
+	public Long getIdModule() {
+		return idModule;
+	}
+	public void setIdModule(Long idModule) {
+		this.idModule = idModule;
 	}
 
 	

@@ -30,7 +30,7 @@ import com.gestion.note.db.DataBaseException;
 /**
  *  choisir une classe,module et une matière 
  * à l'aide d'une boite de dialogue
- * @author BOULUAD
+ * 
  *
  */
 public class DialogChoixMatiere extends JDialog implements ItemListener, ActionListener {
@@ -165,8 +165,8 @@ public class DialogChoixMatiere extends JDialog implements ItemListener, ActionL
 			String selected = (String) comboListModules.getCombo().getSelectedItem();
 
 			try {
-				listStudents = GestionClasses.getInstance().getClasseStudents(selected,
-						Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV)));
+				Long idModule=GestionModules.getInstance().getModuleId(selected);
+				listStudents = GestionModules.getInstance().getStudentsByIdModule(idModule);
 				setVisible(false);
 			} catch (DataBaseException e1) {
 				// TODO Auto-generated catch block

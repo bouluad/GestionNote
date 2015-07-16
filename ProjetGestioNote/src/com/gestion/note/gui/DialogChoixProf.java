@@ -26,7 +26,7 @@ import com.gestion.note.db.DataBaseException;
 /**
  * cette classe permet de configurer le professeur propriètaire
  * de l'application
- * @author BOULUAD
+ * 
  *
  */
 public class DialogChoixProf extends JDialog implements  ActionListener{

@@ -26,6 +26,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.gestion.note.bll.ElementNotFoundException;
+import com.gestion.note.bll.GenerateXml;
 import com.gestion.note.bll.GestionModules;
 import com.gestion.note.bll.GestionNotes;
 import com.gestion.note.bll.GestionProf;
@@ -142,7 +143,7 @@ public class MenuActions extends AbstractAction {
 		TableStudentsPanel tableStudentsPanel = mainFrame.getTableStudentsPanel();
 		
 		mainFrame.addToCenterPanel(mainFrame.getPanel(),tableStudentsPanel);
-		mainFrame.setTxtLabel( "Matière   :  " +(String) dialog.getComboListMatieres().getCombo().getSelectedItem());
+		mainFrame.setTxtLabel( "Matière : " +(String) dialog.getComboListMatieres().getCombo().getSelectedItem());
 
 		TableStudentModel model = tableStudentsPanel.getModel();
 
@@ -264,178 +265,8 @@ public class MenuActions extends AbstractAction {
 		//Recuperer le nom du module
 		MainFrame mainFrame = (MainFrame) menu.getMenuContainer();
 		String moduleName=mainFrame.getTextLblHeader();
-		
-		String[] moduleNameTab=moduleName.split(" : ");
-		
-		if(moduleName.equals("")|| !moduleNameTab[0].equals("Module")){
-			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, "Veuillez consulter un module !!","Avertissement!!", JOptionPane.WARNING_MESSAGE);
-		}
-		else{
-		//choix le chemin 
-		
-		String chemin="";
-		
-		// permet de choisir l'emplaçement de stockage du fichier 
-        
-		final JFileChooser fc = new JFileChooser();
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        
-     
-             int val_retour = fc.showSaveDialog(null);
-
-             if (val_retour == JFileChooser.APPROVE_OPTION) {
-                File fichier = fc.getSelectedFile();
-              
-                chemin=fichier.getAbsolutePath();
-              
-             } 
-		
-		
-		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder docBuilder;
-		
-		GestionModules gsModules = GestionModules.getInstance();
-		GestionProf gsprof=GestionProf.getInstance();
-		GestionNotes gsNotes=GestionNotes.getInstance();
-		
-		try {
-			
-			docBuilder = docFactory.newDocumentBuilder();
-			// root elements
-			Document doc = docBuilder.newDocument();
-			Element rootElement = doc.createElement("listeNotes");
-			doc.appendChild(rootElement);
-			
-			// module element
-			Element module = doc.createElement("module");
-			rootElement.appendChild(module);
-			
-
-			// nom du module
-			Element  nom= doc.createElement("nom");
-			nom.appendChild(doc.createTextNode(moduleNameTab[1]));
-			module.appendChild(nom);
-			
-			// code du module
-			Module mod=gsModules.getModule(moduleNameTab[1]);
-			
-			Element  code= doc.createElement("code");
-			code.appendChild(doc.createTextNode(mod.getCode()));
-			module.appendChild(code);
-		
-			Element  classe= doc.createElement("classe");
-			classe.appendChild(doc.createTextNode(mainFrame.getDialogMatiereSlection2().getComboListClasses().getCombo().getSelectedItem().toString()));
-			module.appendChild(classe);
-			
-			
-			List<Matiere> listMat=gsModules.getMatieresModule(mod.getId());
-			
-			Element matiers=doc.createElement("matieres");
-			for (int i = 0; i < listMat.size(); i++) {
-				Element element=doc.createElement("matiere");
-				matiers.appendChild(element);
 				
-				Attr attr = doc.createAttribute("id");
-				attr.setValue(listMat.get(i).getId().toString());
-				element.setAttributeNode(attr);
-				
-				Attr attr1 = doc.createAttribute("titre");
-				attr1.setValue(listMat.get(i).getIntitule());
-				element.setAttributeNode(attr1);
-			
-				Attr attr2 = doc.createAttribute("enseignant");
-				attr2.setValue(gsprof.getProfByIdMat(listMat.get(i).getIdProf()));
-				element.setAttributeNode(attr2);
-			}
-			
-			module.appendChild(matiers);
-			
-			// les notes d'un module
-			Element notes = doc.createElement("notes");
-			rootElement.appendChild(notes);
-			
-			List <Etudiant> etudiants=gsModules.getStudentsByIdModule(mod.getId());
-			for(int i=0;i<etudiants.size();i++){
-			
-				Element etudiant = doc.createElement("etudiant");
-				notes.appendChild(etudiant);
-				
-				Element cne = doc.createElement("cne");
-				cne.appendChild(doc.createTextNode(etudiants.get(i).getCne()));
-				etudiant.appendChild(cne);
-				
-				Element nomEtudiant = doc.createElement("nom");
-				nomEtudiant.appendChild(doc.createTextNode(etudiants.get(i).getNom()));
-				etudiant.appendChild(nomEtudiant);
-				
-				Element prenomEtudiant = doc.createElement("prenom");
-				prenomEtudiant.appendChild(doc.createTextNode(etudiants.get(i).getPrenom()));
-				etudiant.appendChild(prenomEtudiant);
-				
-				
-				for (int j = 0; j < listMat.size(); j++) {
-
-					Element matiere = doc.createElement("matiere");
-					etudiant.appendChild(matiere);
-					
-					Attr attr = doc.createAttribute("id");
-					attr.setValue(listMat.get(j).getId().toString());
-					matiere.setAttributeNode(attr);
-				
-					Note note=gsNotes.getNote(listMat.get(j).getId().intValue(),etudiants.get(i).getId().intValue(), Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV)));
-					
-					Element noteSn = doc.createElement("noteSN");
-					noteSn.appendChild(doc.createTextNode(String.valueOf(note.getNoteSN())));
-					matiere.appendChild(noteSn);
-
-					Element noteSr = doc.createElement("noteSR");
-					noteSr.appendChild(doc.createTextNode(String.valueOf(note.getNoteSR())));
-					matiere.appendChild(noteSr);
-						
-				}
-				
-				Element moyenne = doc.createElement("moyenne");
-				moyenne.appendChild(doc.createTextNode(String.valueOf(gsModules.getModuleInsctiption(mod.getId(),etudiants.get(i).getId()).getMoyenne())));
-				etudiant.appendChild(moyenne);
-				
-				Element validation = doc.createElement("validation");
-				validation.appendChild(doc.createTextNode(String.valueOf(gsModules.getModuleInsctiption(mod.getId(),etudiants.get(i).getId()).getValidation())));
-				etudiant.appendChild(validation);
-			}
-			
-			
-			// write the content into xml file
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer;
-			transformer = transformerFactory.newTransformer();
-
-			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(chemin+"\\ListeNotes_"+moduleNameTab[1]+".xml"));
-	 
-			transformer.transform(source, result);
-
-			JOptionPane jop = new JOptionPane();
-			jop.showMessageDialog(null, "Le fichier a été généré avec succès","Message!!", JOptionPane.INFORMATION_MESSAGE);
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DataBaseException e) {
-			System.out.println("Element not found1");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		} catch (TransformerConfigurationException e) {
-			
-			e.printStackTrace();
-		} catch (TransformerException e) {
-			System.out.println("Element not found2");
-			e.printStackTrace();
-		}
-		}
-		
-		
+		GenerateXml.generateXmlFile(moduleName);
 	}
 	
 	public String getMethod() {

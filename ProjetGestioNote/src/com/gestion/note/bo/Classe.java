@@ -13,6 +13,11 @@ public class Classe {
 	private String code;
 	private List<Etudiant> etudiants;
 
+	public Classe() {
+
+	}
+
+	
 	public Classe(Long id, String nom, String code) {
 
 		this.id = id;

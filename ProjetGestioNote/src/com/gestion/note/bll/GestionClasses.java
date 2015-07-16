@@ -270,6 +270,40 @@ return lId;
 		return lList;
 
 	}
+	
+	/**
+	 * Methode retourner une classe apartir de son id
+	 * @return
+	 * @throws DataBaseException
+	 * @throws ElementNotFoundException
+	 */
+	public Classe getClasseById(Long idClasse) throws DataBaseException, ElementNotFoundException {
+
+		Connection connect = DBConnection.getInstance();
+		Classe classe =null;
+		try {
+			PreparedStatement findStatement = connect.prepareStatement("SELECT * FROM CLASSE where Classe_ID=?");
+			findStatement.setLong(1, idClasse);
+			ResultSet result = findStatement.executeQuery();
+			while (result.next()) {
+				String nom = result.getString("NOM");
+				String code = result.getString("CODE");
+				int id = result.getInt("CLASSE_ID");
+				classe = new Classe(Long.valueOf(id), nom, code);
+			}
+
+		} catch (SQLException e) {
+			LOG.error("Erreur lors d'une opération sur la base de données" + e);
+			throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
+
+		}
+
+		if ( classe == null)
+			throw new ElementNotFoundException("No record found in database ");
+
+		return classe;
+
+	}
 
 }
 

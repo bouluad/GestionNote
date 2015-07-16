@@ -198,7 +198,9 @@ return lIdModule;
 				double coeff = result.getDouble("COEFF");
 				int id = result.getInt("MATIERE_ID");
 				int idProf=result.getInt("PROF_ID");
-				Matiere lMat = new Matiere(Long.valueOf(id), intitule, nbrHeures, coeff,Long.valueOf(idProf));
+				int idModule=result.getInt("Module_ID");
+
+				Matiere lMat = new Matiere(Long.valueOf(id),Long.valueOf(idModule), intitule, nbrHeures, coeff,Long.valueOf(idProf));
 				lList.add(lMat);
 
 			}
@@ -277,7 +279,9 @@ return lIdModule;
 				int nbrHeures = result.getInt("nbrHeure");
 				double coeff = result.getDouble("COEFF");
 				int id = result.getInt("Matiere_ID");
-				Matiere lMat = new Matiere(Long.valueOf(id), intitule, nbrHeures, coeff);
+				int idModule=result.getInt("Module_ID");
+				int idProf=result.getInt("Prof_ID");
+				Matiere lMat = new Matiere(Long.valueOf(id),Long.valueOf(idModule), intitule, nbrHeures, coeff,Long.valueOf(idProf));
 				lList.add(lMat);
 			}
 
@@ -363,18 +367,22 @@ return lIdModule;
 	{  
 		Connection connect = DBConnection.getInstance();
 
-		Module module= new Module();
+		Module module=null;
 		try {
 			
-			String RequeteSql = "SELECT MODULE.Module_ID,MODULE.code ";
+			String RequeteSql = "SELECT *";
 	        RequeteSql +="FROM MODULE   ";
 	        RequeteSql +="WHERE MODULE.intitule=?";		
 			java.sql.PreparedStatement stmtGetModule = connect.prepareStatement(RequeteSql);
 	        stmtGetModule.setString(1,pIntitule);                
 	        java.sql.ResultSet result = stmtGetModule.executeQuery();        
 	        while (result.next()) {
-	        	module.setId(Long.valueOf(result.getInt("Module_ID")));
-	        	module.setCode(result.getString("code"));
+	        	int id= result.getInt("Module_ID");
+	        	String code = result.getString("code");
+				String intitule = result.getString("intitule");
+				String version = result.getString("version");
+				int idClasse = result.getInt("CLASSE_ID");
+				module=new Module(Long.valueOf(id), code, intitule, version, Long.valueOf(idClasse));
 	        }
 	        
 	} catch (SQLException e) {
@@ -502,5 +510,34 @@ return lIdModule;
 	}
 
 	return inscription;
+	}
+
+	public Module getModuleById(Long id) throws DataBaseException {
+		Connection connect = DBConnection.getInstance();
+
+		Module module=null;
+		try {
+			
+			String RequeteSql = "SELECT *";
+	        RequeteSql +="FROM MODULE   ";
+	        RequeteSql +="WHERE MODULE.Module_ID=?";		
+			java.sql.PreparedStatement stmtGetModule = connect.prepareStatement(RequeteSql);
+	        stmtGetModule.setInt(1,id.intValue());                
+	        java.sql.ResultSet result = stmtGetModule.executeQuery();        
+	        while (result.next()) {
+	        	int idModule= result.getInt("Module_ID");
+	        	String code = result.getString("code");
+				String intitule = result.getString("intitule");
+				String version = result.getString("version");
+				int idClasse = result.getInt("CLASSE_ID");
+				module=new Module(Long.valueOf(idModule), code, intitule, version, Long.valueOf(idClasse));
+	        }
+	        
+	} catch (SQLException e) {
+
+	e.printStackTrace();
+	}
+
+	return module;
 	}	
 }
