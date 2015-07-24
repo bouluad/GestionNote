@@ -213,7 +213,7 @@ public class MenuActions extends AbstractAction {
 	
 
 	public void save() {
-
+	
 		MainFrame mainFrame = (MainFrame) menu.getMenuContainer();
 		DialogChoixMatiere dialog = mainFrame.getDialogMatiereSlection();
 		
@@ -223,16 +223,21 @@ public class MenuActions extends AbstractAction {
 			mainFrame.getTableStudentsPanel().saveChanges(
 					(String) dialog.getComboListMatieres().getCombo().getSelectedItem());
 			
+			JOptionPane.showMessageDialog(null, "Les notes sont sauvegardé",
+					"Modification", JOptionPane.INFORMATION_MESSAGE);
 		} catch (DataBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ElementNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-	public void config()
+	public void config() throws ElementNotFoundException
 	{
 		try {
-			new DialogChoixProf();
+			new DialogConfiguration();
 			
 		} catch (DataBaseException e) {
 			// TODO Auto-generated catch block
@@ -258,8 +263,9 @@ public class MenuActions extends AbstractAction {
 	
 /**
  * methode de générer le fichier XML
+ * @throws DataBaseException 
  */
-	public void generate() {
+	public void generate() throws DataBaseException {
 		
 		
 		//Recuperer le nom du module

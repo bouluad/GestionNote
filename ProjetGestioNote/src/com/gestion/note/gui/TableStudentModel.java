@@ -13,6 +13,7 @@ import com.gestion.note.bll.GestionNotes;
 import com.gestion.note.bo.Etudiant;
 import com.gestion.note.bo.EtudiantNote;
 import com.gestion.note.bo.Note;
+import com.gestion.note.config.Configuration;
 import com.gestion.note.config.ConfigurationLoader;
 import com.gestion.note.db.DataBaseException;
 
@@ -62,8 +63,7 @@ public class TableStudentModel extends AbstractTableModel {
 			Note note = null;
 			EtudiantNote lEtNote = null;
 			try {
-				note = gsNotes.getNote(id, listStudents.get(i).getId().intValue(), Integer
-						.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV)));
+				note = gsNotes.getNote(id, listStudents.get(i).getId().intValue(),Configuration.getInstance().getPropertie().getAnneeuniv());
 
 			} catch (ElementNotFoundException e) {
 				// Si l'étudiant n'as une note dans ce module on lui affecte la

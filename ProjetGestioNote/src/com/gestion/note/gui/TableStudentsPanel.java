@@ -1,20 +1,14 @@
 package com.gestion.note.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.print.PrinterException;
 import java.util.List;
 
-import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 import com.gestion.note.bll.ElementNotFoundException;
@@ -23,6 +17,7 @@ import com.gestion.note.bll.GestionNotes;
 import com.gestion.note.bo.EtudiantNote;
 import com.gestion.note.bo.Matiere;
 import com.gestion.note.bo.Note;
+import com.gestion.note.config.Configuration;
 import com.gestion.note.config.ConfigurationLoader;
 import com.gestion.note.db.DataBaseException;
 
@@ -52,7 +47,7 @@ public class TableStudentsPanel extends JPanel implements TableModelListener {
 
 	}
 
-	public void saveChanges(String pIntitule) throws DataBaseException {
+	public void saveChanges(String pIntitule) throws DataBaseException, ElementNotFoundException {
 
 		List<EtudiantNote> etudiantList = model.getLignes();
 		GestionNotes gsNotes = GestionNotes.getInstance();
@@ -71,13 +66,13 @@ public class TableStudentsPanel extends JPanel implements TableModelListener {
 			Note note = it.getNote();
 
 			if (note.getId().intValue() >= 0) {
-			    gsNotes.updateNoteSN(lMat.getId().intValue(), idEtudinat, Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV)), note.getNoteSN());
-				gsNotes.updateNoteSR(lMat.getId().intValue(), idEtudinat, Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV)), note.getNoteSR());
+			    gsNotes.updateNoteSN(lMat.getId().intValue(), idEtudinat,Configuration.getInstance().getPropertie().getAnneeuniv(), note.getNoteSN());
+				gsNotes.updateNoteSR(lMat.getId().intValue(), idEtudinat,Configuration.getInstance().getPropertie().getAnneeuniv(), note.getNoteSR());
 				
 				
 			} else {
-				note.setAnnee(Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV)));
-				note.setSemestre(Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.SEMESTRE)));
+				note.setAnnee(Configuration.getInstance().getPropertie().getAnneeuniv());
+				note.setSemestre(Configuration.getInstance().getPropertie().getSemestre());
 				gsNotes.SaveNote(note, lMat.getId().intValue(), idEtudinat);
 			}
 

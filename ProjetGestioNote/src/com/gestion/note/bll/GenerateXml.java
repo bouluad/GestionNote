@@ -16,6 +16,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Attr;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
@@ -25,7 +26,7 @@ import com.gestion.note.bo.Etudiant;
 import com.gestion.note.bo.Matiere;
 import com.gestion.note.bo.Module;
 import com.gestion.note.bo.Note;
-import com.gestion.note.config.ConfigurationLoader;
+import com.gestion.note.config.Configuration;
 import com.gestion.note.db.DataBaseException;
 
 /**
@@ -35,6 +36,10 @@ import com.gestion.note.db.DataBaseException;
  */
 public class GenerateXml {
 	
+	/**LOG**/
+	
+	private final static Logger LOG = Logger.getLogger(GenerateXml.class);
+	
 	private static GestionModules gsModules = GestionModules.getInstance();
 	private static GestionProf gsprof=GestionProf.getInstance();
 	private static GestionNotes gsNotes=GestionNotes.getInstance();
@@ -43,8 +48,9 @@ public class GenerateXml {
 	/**
 	 * methode permet de générer le fichier XML
 	 * @param name 
+	 * @throws DataBaseException 
 	 */
-	public static void generateXmlFile(String name){
+	public static void generateXmlFile(String name) throws DataBaseException{
 		
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder;
@@ -117,20 +123,25 @@ public class GenerateXml {
 			transformer(doc, chemin,nameTab[1]);
 
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DataBaseException e) {
-			System.out.println("Element not found1");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		} catch (TransformerConfigurationException e) {
+			LOG.error("Erreur lors de la génération du fichier XML" + e);
 			
-			e.printStackTrace();
+			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+
+		} catch (DataBaseException e) {
+			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			LOG.error("Erreur lors d'une opération sur la base de données" + e);
+			throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
+		
+		} catch (ElementNotFoundException e) {
+			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			LOG.error("Erreur lors d'une opération sur la base de données" + e);
+			throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
+		} catch (TransformerConfigurationException e) {
+			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			LOG.error("Erreur lors de la génération du fichier XML" + e);
 		} catch (TransformerException e) {
-			System.out.println("Element not found2");
-			e.printStackTrace();
+			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			LOG.error("Erreur lors de la génération du fichier XML" + e);
 		}
 		}
 		//si l'utilisateur consulte une matière
@@ -193,20 +204,23 @@ public class GenerateXml {
 				
 				
 			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				LOG.error("Erreur lors de la génération du fichier XML" + e);
+
 			} catch (DataBaseException e) {
-				System.out.println("Element not found1");
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				LOG.error("Erreur lors d'une opération sur la base de données" + e);
+				throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 			} catch (ElementNotFoundException e) {
-				e.printStackTrace();
+				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				LOG.error("Erreur lors d'une opération sur la base de données" + e);
+				throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 			} catch (TransformerConfigurationException e) {
-				
-				e.printStackTrace();
+				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				LOG.error("Erreur lors de la génération du fichier XML" + e);
 			} catch (TransformerException e) {
-				System.out.println("Element not found2");
-				e.printStackTrace();
+				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				LOG.error("Erreur lors de la génération du fichier XML" + e);
 			}
 			}
 			else{
@@ -221,8 +235,9 @@ public class GenerateXml {
 	 * @param doc
 	 * @param matiere
 	 * @param matiers
+	 * @throws DataBaseException 
 	 */
-	private static void matieresTag(Document doc,Matiere matiere,Element matiers){
+	private static void matieresTag(Document doc,Matiere matiere,Element matiers) throws DataBaseException{
 		
 			try {
 			Element element=doc.createElement("matiere");
@@ -242,14 +257,16 @@ public class GenerateXml {
 			element.setAttributeNode(attr2);
 
 			} catch (DOMException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				LOG.error("Erreur lors de la génération du fichier XML" + e);
 			} catch (DataBaseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				LOG.error("Erreur lors d'une opération sur la base de données" + e);
+				throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 			} catch (ElementNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				LOG.error("Erreur lors d'une opération sur la base de données" + e);
+				throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 			}
 		
 	}
@@ -296,8 +313,7 @@ public class GenerateXml {
 		etudiant.appendChild(validation);
 		}
 		} catch (DataBaseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOG.error("Erreur lors d'une operation sur BD" + e);
 		}
 					
 }
@@ -329,9 +345,10 @@ public class GenerateXml {
 	 * @param etudiant
 	 * @param mat
 	 * @param et
+	 * @throws DataBaseException 
 	 */
 	
-	private static void matiereNoteTag(Document doc,Element etudiant ,Matiere mat,Etudiant et){
+	private static void matiereNoteTag(Document doc,Element etudiant ,Matiere mat,Etudiant et) throws DataBaseException{
 		
 		try {
 		Element matiere = doc.createElement("matiere");
@@ -341,7 +358,7 @@ public class GenerateXml {
 		attr.setValue(mat.getId().toString());
 		matiere.setAttributeNode(attr);
 				
-		Note note = gsNotes.getNote(mat.getId().intValue(),et.getId().intValue(), Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV)));
+		Note note = gsNotes.getNote(mat.getId().intValue(),et.getId().intValue(),Configuration.getInstance().getPropertie().getAnneeuniv());
 		
 						
 		Element noteSn = doc.createElement("noteSN");
@@ -352,15 +369,14 @@ public class GenerateXml {
 		noteSr.appendChild(doc.createTextNode(String.valueOf(note.getNoteSR())));
 		matiere.appendChild(noteSr);
 		}
-		catch (NumberFormatException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-		} catch (DataBaseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		catch (DataBaseException e) {
+			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			LOG.error("Erreur lors d'une opération sur la base de données" + e);
+			throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 		} catch (ElementNotFoundException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			LOG.error("Erreur lors d'une opération sur la base de données" + e);
+			throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 		}
 	}
 	

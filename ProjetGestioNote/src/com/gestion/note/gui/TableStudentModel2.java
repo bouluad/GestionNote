@@ -13,6 +13,7 @@ import com.gestion.note.bo.Etudiant;
 import com.gestion.note.bo.EtudiantNote;
 import com.gestion.note.bo.Matiere;
 import com.gestion.note.bo.Note;
+import com.gestion.note.config.Configuration;
 import com.gestion.note.config.ConfigurationLoader;
 import com.gestion.note.db.DataBaseException;
 
@@ -27,7 +28,6 @@ public class TableStudentModel2 extends AbstractTableModel
 {   
 	
 	/** Les colonnes de la table */
-	//private String[] colonnes = { "Nom", "Prénom", "CNE","Moyenne"};
 	private List<String> colonnes=new ArrayList<String>();
 	/** les données du tableau */
 	private List<EtudiantNote> lignes = new ArrayList<EtudiantNote>();
@@ -52,7 +52,7 @@ public class TableStudentModel2 extends AbstractTableModel
 	}
 
 	
-	public void update(List<Etudiant> listStudents, String pIntitule,String className) throws DataBaseException {
+	public void update(List<Etudiant> listStudents, String pIntitule,String className) throws DataBaseException, ElementNotFoundException {
 
 		// Effacer la liste
 		lignes.clear();
@@ -66,8 +66,8 @@ public class TableStudentModel2 extends AbstractTableModel
 			
 			EtudiantNote lEtNote = null;
 			try {
-				moyenn = gsNotes.calculateMoyenne((long)listStudents.get(i).getId().intValue(),(long)id, Integer
-						.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV)));
+				moyenn = gsNotes.calculateMoyenne((long)listStudents.get(i).getId().intValue(),(long)id,
+						Configuration.getInstance().getPropertie().getAnneeuniv());
 
 			} catch (ElementNotFoundException e) {
 				
@@ -81,7 +81,7 @@ public class TableStudentModel2 extends AbstractTableModel
 			listMatieres = lGestModules.getMatieresModule(id);
 			matiereSize=listMatieres.size();
 			for(int j=0;j<listMatieres.size();j++){
-				listNotes.add(getNoteByIdEtAndMat((long)listStudents.get(i).getId().intValue(),(long)listMatieres.get(j).getId().intValue(), Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV))));
+				listNotes.add(getNoteByIdEtAndMat((long)listStudents.get(i).getId().intValue(),(long)listMatieres.get(j).getId().intValue(),Configuration.getInstance().getPropertie().getAnneeuniv()));
 				System.out.println("note:"+getNoteByIdEtAndMat((long)listStudents.get(i).getId().intValue(),(long)listMatieres.get(j).getId().intValue(), Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV))));
 			}
 			
@@ -104,15 +104,17 @@ public class TableStudentModel2 extends AbstractTableModel
 
 	}
 	
-	private String testValidation(double m,String className){
+	private String testValidation(double m,String className) throws DataBaseException, ElementNotFoundException{
 		
-		if(className.startsWith("C") && (m>=Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.SEUILCP))))
+	
+		
+		if(className.startsWith("C") && (m>=Configuration.getInstance().getPropertie().getSeuilCp()))
 			return "V";
-		if(className.startsWith("C") && (m<Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.SEUILCP))))
+		if(className.startsWith("C") && (m<Configuration.getInstance().getPropertie().getSeuilCp()))
 			return "NV";
-		if(className.startsWith("G") && (m>=Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.SEUILCI))))
+		if(className.startsWith("G") && (m>=Configuration.getInstance().getPropertie().getSeuilCi()))
 			return "V";
-		if(className.startsWith("G") && (m<Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.SEUILCI))))
+		if(className.startsWith("G") && (m<Configuration.getInstance().getPropertie().getSeuilCi()))
 			return "NV";
 		else return "undefined";
 	}

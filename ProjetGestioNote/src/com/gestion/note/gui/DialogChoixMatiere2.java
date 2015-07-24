@@ -10,6 +10,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -20,6 +21,7 @@ import com.gestion.note.bll.GestionModules;
 import com.gestion.note.bo.Classe;
 import com.gestion.note.bo.Etudiant;
 import com.gestion.note.bo.Module;
+import com.gestion.note.config.Configuration;
 import com.gestion.note.config.ConfigurationLoader;
 import com.gestion.note.db.DataBaseException;
 
@@ -127,7 +129,7 @@ public class DialogChoixMatiere2 extends JDialog implements ItemListener, Action
 
 			try {
 				listStudents = GestionClasses.getInstance().getClasseStudents(selected,
-						Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV)));
+						Configuration.getInstance().getPropertie().getAnneeuniv());
 				setVisible(false);
 			} catch (DataBaseException e1) {
 				// TODO Auto-generated catch block

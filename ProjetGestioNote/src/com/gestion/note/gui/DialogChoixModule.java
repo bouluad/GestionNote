@@ -20,6 +20,7 @@ import com.gestion.note.bo.Classe;
 import com.gestion.note.bo.Etudiant;
 import com.gestion.note.bo.Matiere;
 import com.gestion.note.bo.Module;
+import com.gestion.note.config.Configuration;
 import com.gestion.note.config.ConfigurationLoader;
 import com.gestion.note.db.DataBaseException;
 
@@ -131,7 +132,7 @@ public class DialogChoixModule  extends JDialog implements ItemListener, ActionL
 
 			try {
 				listStudents = GestionClasses.getInstance().getClasseStudents(selected,
-						Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV)));
+						Configuration.getInstance().getPropertie().getAnneeuniv());
 				setVisible(false);
 			} catch (DataBaseException e1) {
 				// TODO Auto-generated catch block
@@ -146,7 +147,7 @@ public class DialogChoixModule  extends JDialog implements ItemListener, ActionL
 			setVisible(false);
 		}
 		
-		
+		//ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV)
 		
 		
 	}
