@@ -33,7 +33,7 @@ import com.gestion.note.db.DataBaseException;
  * Génération des notes d'un module ou d'une matière sous format xml
  * 
  *
- */
+ */ 
 public class GenerateXml {
 	
 	/**LOG**/
