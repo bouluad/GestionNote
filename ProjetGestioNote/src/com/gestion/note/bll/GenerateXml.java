@@ -125,22 +125,22 @@ public class GenerateXml {
 		} catch (ParserConfigurationException e) {
 			LOG.error("Erreur lors de la génération du fichier XML" + e);
 			
-			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 
 		} catch (DataBaseException e) {
-			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 			LOG.error("Erreur lors d'une opération sur la base de données" + e);
 			throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 		
 		} catch (ElementNotFoundException e) {
-			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 			LOG.error("Erreur lors d'une opération sur la base de données" + e);
 			throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 		} catch (TransformerConfigurationException e) {
-			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 			LOG.error("Erreur lors de la génération du fichier XML" + e);
 		} catch (TransformerException e) {
-			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 			LOG.error("Erreur lors de la génération du fichier XML" + e);
 		}
 		}
@@ -204,22 +204,22 @@ public class GenerateXml {
 				
 				
 			} catch (ParserConfigurationException e) {
-				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 				LOG.error("Erreur lors de la génération du fichier XML" + e);
 
 			} catch (DataBaseException e) {
-				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 				LOG.error("Erreur lors d'une opération sur la base de données" + e);
 				throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 			} catch (ElementNotFoundException e) {
-				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 				LOG.error("Erreur lors d'une opération sur la base de données" + e);
 				throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 			} catch (TransformerConfigurationException e) {
-				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 				LOG.error("Erreur lors de la génération du fichier XML" + e);
 			} catch (TransformerException e) {
-				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 				LOG.error("Erreur lors de la génération du fichier XML" + e);
 			}
 			}
@@ -257,14 +257,14 @@ public class GenerateXml {
 			element.setAttributeNode(attr2);
 
 			} catch (DOMException e) {
-				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 				LOG.error("Erreur lors de la génération du fichier XML" + e);
 			} catch (DataBaseException e) {
-				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 				LOG.error("Erreur lors d'une opération sur la base de données" + e);
 				throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 			} catch (ElementNotFoundException e) {
-				new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+				new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 				LOG.error("Erreur lors d'une opération sur la base de données" + e);
 				throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 			}
@@ -335,8 +335,7 @@ public class GenerateXml {
  
 		transformer.transform(source, result);
 
-		JOptionPane jop = new JOptionPane();
-		jop.showMessageDialog(null, "Le fichier a été généré avec succès","Message!!", JOptionPane.INFORMATION_MESSAGE);
+		
 	}
 	
 	/**
@@ -370,11 +369,11 @@ public class GenerateXml {
 		matiere.appendChild(noteSr);
 		}
 		catch (DataBaseException e) {
-			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 			LOG.error("Erreur lors d'une opération sur la base de données" + e);
 			throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 		} catch (ElementNotFoundException e) {
-			new JOptionPane().showMessageDialog(null, "Ne peut pas généré le fichier","Message!!", JOptionPane.ERROR_MESSAGE);
+			new JOptionPane().showMessageDialog(null, "Le fichier ne peut pas être généré","Message!!", JOptionPane.ERROR_MESSAGE);
 			LOG.error("Erreur lors d'une opération sur la base de données" + e);
 			throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
 		}
@@ -396,6 +395,11 @@ public class GenerateXml {
                 File fichier = fc.getSelectedFile();
               
                 chemin=fichier.getAbsolutePath();
+                
+                // 
+                JOptionPane jop = new JOptionPane();
+        		jop.showMessageDialog(null, "Le fichier a été généré avec succès","Message!!", JOptionPane.INFORMATION_MESSAGE);
+        	
               
              } 
        return chemin;      

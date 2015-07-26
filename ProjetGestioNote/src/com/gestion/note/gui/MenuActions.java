@@ -223,7 +223,7 @@ public class MenuActions extends AbstractAction {
 			mainFrame.getTableStudentsPanel().saveChanges(
 					(String) dialog.getComboListMatieres().getCombo().getSelectedItem());
 			
-			JOptionPane.showMessageDialog(null, "Les notes sont sauvegardé",
+			JOptionPane.showMessageDialog(null, "Les notes sont sauvegardé avec succès",
 					"Modification", JOptionPane.INFORMATION_MESSAGE);
 		} catch (DataBaseException e) {
 			// TODO Auto-generated catch block
