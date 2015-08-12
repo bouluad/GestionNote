@@ -38,6 +38,10 @@ public class Etudiant {
 		this.lieuNais = lieuNais;
 	}
 
+	public Etudiant() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Long getId() {
 		return id;
 	}

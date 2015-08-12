@@ -1,5 +1,6 @@
 package com.gestion.note.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,17 +19,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.gestion.note.bll.LireXML;
+import com.gestion.note.db.DataBaseException;
 import com.gestion.note.outils.FileFiltre;
-
-
-
-
 
 public class ImportPanel extends JPanel {
 
 	private JTextField fileNameText;
 
 	private MainFrame parentFrame;
+	
+	private LireXML lireXML;
 	
 	private File file;
 
@@ -160,7 +160,8 @@ public class ImportPanel extends JPanel {
 		btnImporter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 
-			new LireXML(fileNameText.getText());
+			lireXML=new LireXML(fileNameText.getText());
+			afficherTable();
 
 			}
 		});
@@ -169,6 +170,23 @@ public class ImportPanel extends JPanel {
 		gbc_btnImporter.gridy = 6;
 		add(btnImporter, gbc_btnImporter);
 
+	}
+	
+	private void afficherTable(){
+		TableStudentsPanel tableStudentsPanel = parentFrame.getTableStudentsPanel();
+		
+		parentFrame.getPanel().setLayout(new BorderLayout());
+		parentFrame.addToCenterPanel(parentFrame.getPanel(),tableStudentsPanel);
+		parentFrame.setTxtLabel( "Matière : "+lireXML.getTitre());
+
+		TableStudentModel model = tableStudentsPanel.getModel();
+
+		try {
+			model.updae(lireXML.getEtudiantNotes());
+		} catch (DataBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 

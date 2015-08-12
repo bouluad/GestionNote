@@ -3,12 +3,12 @@ package com.gestion.note.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
 
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,6 +28,7 @@ public class MainFrame extends JFrame {
 
 	/** Panel de la liste des étudiants */
 	
+	private TableStudentsPanel tableStudentsPanel;
 	private ImportPanel importpanel;
 	//affiche le nom d'un module ou d'une matière
 	private JLabel lblHeader=new JLabel("");
@@ -35,8 +36,7 @@ public class MainFrame extends JFrame {
 	/** Menu de l'application */
 	private AsnMenu asnMenu;
 
-	/** Boite de dialogue */
-
+	private JButton validerButton;
 
 	/** Logger pour la journalisation des messages */
 	private final static Logger LOG = Logger.getLogger(MainFrame.class);
@@ -51,24 +51,27 @@ public class MainFrame extends JFrame {
     public void addToCenterPanel(JPanel panel,JPanel table)
     {
     	panel.removeAll();
-    	
-    	
+    	panel.repaint();
     	JPanel pnlHeaderJPanel=new JPanel();
-	
 		pnlHeaderJPanel.add(lblHeader);
-    	
     	panel.add(pnlHeaderJPanel,BorderLayout.NORTH);
     	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.WEST);
     	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.EAST);
       	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.SOUTH);
     	panel.add(table, BorderLayout.CENTER);
+    	
+    	validerButton=new JButton("Valider");
+    	JPanel panelButton=new JPanel();
+    	panelButton.add(validerButton);
+    	panel.add(panelButton,BorderLayout.SOUTH);
     	validate();
     }
+    
 	public MainFrame() {
 
 		
 		setLookAndFeel("Nimbus");
-		//tableStudentsPanel = new TableStudentsPanel();
+		tableStudentsPanel = new TableStudentsPanel();
 		setTitle("Gestion des notes ENSAH");
 		
 
@@ -84,8 +87,6 @@ public class MainFrame extends JFrame {
 		JPanel pnlHeaderJPanel=new JPanel();
 		
 		pnlHeaderJPanel.add(Box.createRigidArea(new Dimension (2000,100)));
-   	
-		
 		
 		importpanel=new ImportPanel(this);
 		
@@ -93,7 +94,7 @@ public class MainFrame extends JFrame {
         
         
 		panel=new JPanel();
-	
+
 		panel.add(pnlHeaderJPanel,BorderLayout.NORTH);
 		panel.add(importpanel,BorderLayout.CENTER);
 		
@@ -218,6 +219,12 @@ public class MainFrame extends JFrame {
 
 	public String getTextLblHeader() {
 		return lblHeader.getText();
+	}
+	public TableStudentsPanel getTableStudentsPanel() {
+		return tableStudentsPanel;
+	}
+	public void setTableStudentsPanel(TableStudentsPanel tableStudentsPanel) {
+		this.tableStudentsPanel = tableStudentsPanel;
 	}
 	
 }
