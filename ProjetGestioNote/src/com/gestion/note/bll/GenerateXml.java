@@ -168,7 +168,7 @@ public class GenerateXml {
 			
 				// nom du module
 				Matiere mat=gsModules.getMatiereByName(nameTab[1]);
-				Module mod=gsModules.getModuleById(mat.getId());
+				Module mod=gsModules.getModuleById(mat.getIdModule());
 				
 				Element  nom= doc.createElement("nom");
 				nom.appendChild(doc.createTextNode(mod.getIntitule()));
