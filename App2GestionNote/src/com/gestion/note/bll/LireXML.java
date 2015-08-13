@@ -59,26 +59,26 @@ public class LireXML {
     	// make sure it's element node.
     	if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
     		
-    		if (tempNode.getNodeName().equals("etudiant")) {  
+    		if ("etudiant".equals(tempNode.getNodeName())) {  
     	        etudiant=new Etudiant();
     	        note =new Note();
 			}
-    		if (tempNode.getNodeName().equals("cne")) {
+    		if ("cne".equals(tempNode.getNodeName())) {
 				etudiant.setCne(tempNode.getTextContent());
 			}
-    		if (tempNode.getNodeName().equals("nom") && etudiant !=null) {
+    		if ("nom".equals(tempNode.getNodeName()) && etudiant !=null) {
 				etudiant.setNom(tempNode.getTextContent());
     			
 			}
-    		if (tempNode.getNodeName().equals("prenom")) {
+    		if ("prenom".equals(tempNode.getNodeName())) {
 				etudiant.setPrenom(tempNode.getTextContent());
 
 			}
-    		if (tempNode.getNodeName().equals("noteSN")) {
+    		if ("noteSN".equals(tempNode.getNodeName())) {
 				note.setNoteSN(Double.parseDouble(tempNode.getTextContent()));
 
 			}
-    		if (tempNode.getNodeName().equals("noteSR")) {
+    		if ("noteSR".equals(tempNode.getNodeName())) {
 				note.setNoteSR(Double.parseDouble(tempNode.getTextContent()));
         	   	etudiantNote=new EtudiantNote(etudiant, note);
              	etudiantNotes.add(etudiantNote);
@@ -97,7 +97,7 @@ public class LireXML {
     			for (int i = 0; i < nodeMap.getLength(); i++) {
      
     				Node node = nodeMap.item(i);
-    				if(node.getNodeName().equals("titre")){
+    				if("titre".equals(node.getNodeName())){
     					setTitre(node.getNodeValue());
     				}
     				System.out.println("attr name : " + node.getNodeName());
