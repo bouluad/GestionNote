@@ -49,11 +49,10 @@ public class LireXML {
     }
 }
     private void printNote(NodeList nodeList) {
-    	 
     	
         for (int count = 0; count < nodeList.getLength(); count++) {
 
-        
+       
     	Node tempNode = nodeList.item(count);
     	 
     	// make sure it's element node.
@@ -62,6 +61,9 @@ public class LireXML {
     		if ("etudiant".equals(tempNode.getNodeName())) {  
     	        etudiant=new Etudiant();
     	        note =new Note();
+			}
+    		if ("id".equals(tempNode.getNodeName())) {
+				etudiant.setId(Long.valueOf(tempNode.getTextContent()));
 			}
     		if ("cne".equals(tempNode.getNodeName())) {
 				etudiant.setCne(tempNode.getTextContent());
@@ -80,10 +82,11 @@ public class LireXML {
 			}
     		if ("noteSR".equals(tempNode.getNodeName())) {
 				note.setNoteSR(Double.parseDouble(tempNode.getTextContent()));
+				
         	   	etudiantNote=new EtudiantNote(etudiant, note);
              	etudiantNotes.add(etudiantNote);
-    			
-			}
+    		}
+		
      
     		// get node name and value
     		System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");

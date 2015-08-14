@@ -3,11 +3,15 @@ package com.gestion.note.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +22,7 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.apache.log4j.Logger;
 
+import com.gestion.note.bll.ElementNotFoundException;
 import com.gestion.note.config.ConfigurationLoader;
 import com.gestion.note.db.DBInstallation;
 import com.gestion.note.db.DataBaseException;
@@ -37,6 +42,7 @@ public class MainFrame extends JFrame {
 	private AsnMenu asnMenu;
 
 	private JButton validerButton;
+	private JButton btnAnnuler;
 
 	/** Logger pour la journalisation des messages */
 	private final static Logger LOG = Logger.getLogger(MainFrame.class);
@@ -53,16 +59,53 @@ public class MainFrame extends JFrame {
     	panel.removeAll();
     	panel.repaint();
     	JPanel pnlHeaderJPanel=new JPanel();
-		pnlHeaderJPanel.add(lblHeader);
+    	pnlHeaderJPanel.setLayout(new BorderLayout());
+    	JLabel lblVrifierLesInformations = new JLabel(
+				"V\u00E9rifier les informations ci-dessous et cliquer sur confirmer pour importer les notes dans la base de donn\u00E9es");
+		
+    	
+    	pnlHeaderJPanel.add(lblVrifierLesInformations,BorderLayout.NORTH);
+    	pnlHeaderJPanel.add(Box.createRigidArea(new Dimension (600,15)),BorderLayout.CENTER);
+		pnlHeaderJPanel.add(lblHeader,BorderLayout.SOUTH);
+		
+		JPanel pnl=new JPanel();
+		pnl.setLayout(new FlowLayout());
+		pnl.add(pnlHeaderJPanel);
     	panel.add(pnlHeaderJPanel,BorderLayout.NORTH);
     	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.WEST);
     	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.EAST);
       	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.SOUTH);
     	panel.add(table, BorderLayout.CENTER);
     	
-    	validerButton=new JButton("Valider");
+    	
+    	
+    	
+    	btnAnnuler = new JButton("Annuler");
+    	validerButton=new JButton("Confirmer");
     	JPanel panelButton=new JPanel();
+    	panelButton.add(btnAnnuler);
+    	panelButton.add(Box.createRigidArea(new Dimension (15,15)));
     	panelButton.add(validerButton);
+    	
+    	validerButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+			System.out.println("button valide");
+			String[] nameTab=lblHeader.getText().split(" : ");
+			
+			try {
+				tableStudentsPanel.saveChanges(nameTab[1]);
+			} catch (DataBaseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ElementNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+		});
     	panel.add(panelButton,BorderLayout.SOUTH);
     	validate();
     }
