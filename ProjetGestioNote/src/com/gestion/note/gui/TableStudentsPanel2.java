@@ -1,7 +1,5 @@
 package com.gestion.note.gui;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.print.PrinterException;
 import java.util.List;
@@ -11,7 +9,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 
 public class TableStudentsPanel2 extends JPanel implements TableModelListener
@@ -102,6 +99,5 @@ public class TableStudentsPanel2 extends JPanel implements TableModelListener
 	public void setModel(TableStudentModel2 model) {
 		this.model = model;
 	}
-
 
 }

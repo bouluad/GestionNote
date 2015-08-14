@@ -286,7 +286,11 @@ public class GenerateXml {
 					
 		Element etudiant = doc.createElement("etudiant");
 		notes.appendChild(etudiant);
-						
+		
+		Element id = doc.createElement("id");
+		id.appendChild(doc.createTextNode(et.getId().toString()));
+		etudiant.appendChild(id);
+		
 		Element cne = doc.createElement("cne");
 		cne.appendChild(doc.createTextNode(et.getCne()));
 		etudiant.appendChild(cne);
