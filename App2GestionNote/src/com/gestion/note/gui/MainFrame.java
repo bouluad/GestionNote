@@ -84,6 +84,16 @@ public class MainFrame extends JFrame {
     	validerButton=new JButton("Confirmer");
     	JPanel panelButton=new JPanel();
     	panelButton.add(btnAnnuler);
+    	
+    	btnAnnuler.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent arg0) {
+				getPanel().removeAll();
+				im();
+				validate();
+			}
+		});
+    	
     	panelButton.add(Box.createRigidArea(new Dimension (15,15)));
     	panelButton.add(validerButton);
     	
@@ -99,11 +109,6 @@ public class MainFrame extends JFrame {
 				tableStudentsPanel.saveChanges(nameTab[1]);
 				
 				
-				//****** ce que j'ai ajouter pour faire la redirection
-				getPanel().removeAll();
-				im();
-				validate();
-				//*******
 
 			} catch (DataBaseException e) {
 				// TODO Auto-generated catch block
@@ -112,6 +117,17 @@ public class MainFrame extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			//****** ce que j'ai ajouter pour faire la redirection
+			new JOptionPane().showMessageDialog(null, "l'enregistrement est faite avec succès", "Message",
+					JOptionPane.INFORMATION_MESSAGE);
+			
+			getPanel().removeAll();
+			im();
+			validate();
+			
+			
+			//*******
+			
 			}
 		});
     	panel.add(panelButton,BorderLayout.SOUTH);
@@ -277,9 +293,6 @@ public class MainFrame extends JFrame {
 		
 		importpanel=new ImportPanel(this);
 		
-        
-        
-        
 		panel=new JPanel();
 
 		panel.add(pnlHeaderJPanel,BorderLayout.NORTH);
