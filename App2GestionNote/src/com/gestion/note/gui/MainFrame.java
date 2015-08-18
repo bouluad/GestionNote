@@ -97,6 +97,14 @@ public class MainFrame extends JFrame {
 			
 			try {
 				tableStudentsPanel.saveChanges(nameTab[1]);
+				
+				
+				//****** ce que j'ai ajouter pour faire la redirection
+				getPanel().removeAll();
+				im();
+				validate();
+				//*******
+
 			} catch (DataBaseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -127,21 +135,10 @@ public class MainFrame extends JFrame {
 		Image icone = Toolkit.getDefaultToolkit().getImage("resources/icons/appIcon.png");
 		setIconImage(icone);
         
-		JPanel pnlHeaderJPanel=new JPanel();
 		
-		pnlHeaderJPanel.add(Box.createRigidArea(new Dimension (2000,100)));
-		
-		importpanel=new ImportPanel(this);
-		
-        
-        
-        
-		panel=new JPanel();
+		//***********************************
+			im();	
 
-		panel.add(pnlHeaderJPanel,BorderLayout.NORTH);
-		panel.add(importpanel,BorderLayout.CENTER);
-		
-		add(panel,BorderLayout.CENTER);
 		// Propriétés de la fenetre
 		
 		Toolkit lTk=Toolkit.getDefaultToolkit();
@@ -270,4 +267,27 @@ public class MainFrame extends JFrame {
 		this.tableStudentsPanel = tableStudentsPanel;
 	}
 	
+	//***********************
+	public void im()
+	{
+		
+		JPanel pnlHeaderJPanel=new JPanel();
+		
+		pnlHeaderJPanel.add(Box.createRigidArea(new Dimension (2000,100)));
+		
+		importpanel=new ImportPanel(this);
+		
+        
+        
+        
+		panel=new JPanel();
+
+		panel.add(pnlHeaderJPanel,BorderLayout.NORTH);
+		panel.add(importpanel,BorderLayout.CENTER);
+		
+		add(panel,BorderLayout.CENTER);
+		
+		revalidate();
+
+	}
 }
