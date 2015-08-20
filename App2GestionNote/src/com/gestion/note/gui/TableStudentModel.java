@@ -7,9 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
-import com.gestion.note.bo.Etudiant;
 import com.gestion.note.bo.EtudiantNote;
-import com.gestion.note.bo.Note;
 import com.gestion.note.db.DataBaseException;
 
 

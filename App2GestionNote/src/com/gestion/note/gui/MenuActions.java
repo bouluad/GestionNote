@@ -10,8 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import com.gestion.note.bo.Etudiant;
-import com.gestion.note.bo.Matiere;
+import com.gestion.note.bll.ElementNotFoundException;
 import com.gestion.note.db.DataBaseException;
 
 
@@ -117,6 +116,8 @@ public class MenuActions extends AbstractAction {
 	
 	public void openSaisie() throws DataBaseException
 	{
+		DialogChoixMatiere2 dialog = new DialogChoixMatiere2();
+		dialog.setVisible(true);
 	}
 
 	/**
