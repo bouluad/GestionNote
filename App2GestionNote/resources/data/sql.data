@@ -117,8 +117,6 @@ INSERT INTO TBA.CLASSE (NOM, CODE, CLASSE_ID) VALUES ('DeuxiËme AnnÈe Cycle PrÈp
 
 
 
-
-
 INSERT INTO TBA.ETUDIANT (NOM, PRÈNOM, CIN, CNE, DATENAIS, LIEUNAIS, ETUDIANT_ID, Classe_ID) VALUES ('BOUDAA', 'TARIK', 'A121211', '212121211', '2009-12-12', 'Nador', 1,1);
 INSERT INTO TBA.ETUDIANT (NOM, PRÈNOM, CIN, CNE, DATENAIS, LIEUNAIS, ETUDIANT_ID, Classe_ID) VALUES ('Karmi', 'Salami', 'A121211', '21213231', '2009-12-12', 'Nador', 2,1);
 INSERT INTO TBA.ETUDIANT (NOM, PRÈNOM, CIN, CNE, DATENAIS, LIEUNAIS, ETUDIANT_ID, Classe_ID) VALUES ('El OUalidi', 'Nafiaa', 'A121211', '212121211', '2009-12-12', 'Nador', 3,2);
@@ -145,6 +143,14 @@ INSERT INTO TBA.MATIËRE (MATIERE_ID,INTITULE,NBRHEURE,COEFF, MODULE_ID,PROF_ID) 
 
 INSERT INTO TBA.MATIËRE (MATIERE_ID,INTITULE,NBRHEURE,COEFF, MODULE_ID,PROF_ID) VALUES (default,'Programmation C++',40, 2,2,2);
 
+
+INSERT INTO TBA.Inscription (noteSN,noteSR,semestre,annee,Inscription_ID,Module_ID,Etudiant_ID) VALUES (12,9,2,2011,default,1,1);
+
+INSERT INTO TBA.Inscription (noteSN,noteSR,semestre,annee,Inscription_ID,Module_ID,Etudiant_ID) VALUES (12,9,2,2011,default,2,1);
+
+INSERT INTO TBA.Inscription (noteSN,noteSR,semestre,annee,Inscription_ID,Module_ID,Etudiant_ID) VALUES (12,9,2,2011,default,1,2);
+
+INSERT INTO TBA.Inscription (noteSN,noteSR,semestre,annee,Inscription_ID,Module_ID,Etudiant_ID) VALUES (12,9,2,2011,default,1,3);
 
 INSERT INTO TBA.Configuration (anneeuniv,semestre,seuilCp,seuilCi) VALUES (2011,1,10,12);
 
