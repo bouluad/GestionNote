@@ -36,6 +36,9 @@ public class MainFrame extends JFrame {
 	private ImportPanel importpanel;
 	//affiche le nom d'un module ou d'une matière
 	private JLabel lblHeader=new JLabel("");
+	
+	
+	private DialogChoixClasse dialogChoixClasse;
 
 	/** Menu de l'application */
 	private AsnMenu asnMenu;
@@ -132,6 +135,24 @@ public class MainFrame extends JFrame {
     	panel.add(panelButton,BorderLayout.SOUTH);
     	validate();
     }
+    
+    public void addToCenter(JPanel panel,JPanel table)
+    {
+    	panel.removeAll();
+    	panel.repaint();
+    	
+    	JPanel pnlHeaderJPanel=new JPanel();
+	
+		pnlHeaderJPanel.add(lblHeader);
+    	
+    	panel.add(pnlHeaderJPanel,BorderLayout.NORTH);
+    	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.WEST);
+    	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.EAST);
+      	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.SOUTH);
+    	panel.add(table, BorderLayout.CENTER);
+    	revalidate();
+    }
+    
     
 	public MainFrame() {
 
@@ -302,4 +323,15 @@ public class MainFrame extends JFrame {
 		revalidate();
 
 	}
+
+	public DialogChoixClasse getDialogChoixClasse() {
+		return dialogChoixClasse;
+	}
+
+	public void setDialogChoixClasse(DialogChoixClasse dialogChoixClasse) {
+		this.dialogChoixClasse = dialogChoixClasse;
+	}
+
+
+	
 }

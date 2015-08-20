@@ -25,14 +25,14 @@ import com.gestion.note.db.DataBaseException;
  *
  *
  */
-public class DialogChoixMatiere2 extends JDialog implements ItemListener, ActionListener
+public class DialogChoixClasse extends JDialog implements ItemListener, ActionListener
 {
 
 	
 	private LabledComboBox comboListClasses;
 	private JButton validerButton = new JButton("Valdier");
 	private JButton annulerButton = new JButton("Annuler");
-	private List<Etudiant> listStudents = new ArrayList<Etudiant>();
+	private Long idClasseChoisi;
 	
 
 	/**
@@ -40,10 +40,10 @@ public class DialogChoixMatiere2 extends JDialog implements ItemListener, Action
 	 * 
 	 * @throws DataBaseException
 	 */
-	public DialogChoixMatiere2() throws DataBaseException {
+	public DialogChoixClasse() throws DataBaseException {
 
 		setModal(true);
-		setTitle("La consultation Des Notes  ");
+		setTitle("La consultation des notes  ");
 		setResizable(false);
 		setSize(450,140);
 		setLocationRelativeTo(null);
@@ -96,18 +96,19 @@ public class DialogChoixMatiere2 extends JDialog implements ItemListener, Action
 		}
 		if (e.getSource() == validerButton) {
 
-//			String selected = (String) comboListModules.getCombo().getSelectedItem();
-//
-//			try {
-//				listStudents = GestionClasses.getInstance().getClasseStudents(selected,
-//						Configuration.getInstance().getPropertie().getAnneeuniv());
-//				setVisible(false);
-//			} catch (DataBaseException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			} catch (ElementNotFoundException e1) {
-//				// Exception volentairement ignorée
-//			}
+			String selected = (String) comboListClasses.getCombo().getSelectedItem();
+
+			try {
+			
+				idClasseChoisi = GestionClasses.getInstance().findid(selected);
+			
+				setVisible(false);
+			} catch (DataBaseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ElementNotFoundException e1) {
+				// Exception volentairement ignorée
+			}
 
 		}
 
@@ -126,12 +127,30 @@ public class DialogChoixMatiere2 extends JDialog implements ItemListener, Action
 		this.comboListClasses = comboListClasses;
 	}
 
-	public List<Etudiant> getListStudents() {
-		return listStudents;
+	public JButton getValiderButton() {
+		return validerButton;
 	}
 
-	public void setListStudents(List<Etudiant> listStudents) {
-		this.listStudents = listStudents;
+	public void setValiderButton(JButton validerButton) {
+		this.validerButton = validerButton;
 	}
+
+	public JButton getAnnulerButton() {
+		return annulerButton;
+	}
+
+	public void setAnnulerButton(JButton annulerButton) {
+		this.annulerButton = annulerButton;
+	}
+
+	public Long getIdClasseChoisi() {
+		return idClasseChoisi;
+	}
+
+	public void setIdClasseChoisi(Long idClasseChoisi) {
+		this.idClasseChoisi = idClasseChoisi;
+	}
+
+
 
 }

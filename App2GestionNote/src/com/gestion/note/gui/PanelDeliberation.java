@@ -40,11 +40,11 @@ public class PanelDeliberation extends JPanel implements TableModelListener
 
 	}
 	
-	public PanelDeliberation(List<String> st) {
+	public PanelDeliberation(Long idClasse) {
 		
 		setLayout(new GridLayout(1,1));
 
-		model = new ModelTableDeliberation(st);
+		model = new ModelTableDeliberation(idClasse);
 		model.addTableModelListener(this);
 		dataTable = new JTable(model);
 

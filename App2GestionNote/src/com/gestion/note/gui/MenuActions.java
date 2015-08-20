@@ -116,8 +116,23 @@ public class MenuActions extends AbstractAction {
 	
 	public void openSaisie() throws DataBaseException
 	{
-		DialogChoixMatiere2 dialog = new DialogChoixMatiere2();
+		DialogChoixClasse dialog = new DialogChoixClasse();
 		dialog.setVisible(true);
+		MainFrame mainFrame = (MainFrame) menu.getMenuContainer();
+		mainFrame.setDialogChoixClasse(dialog);
+		
+		PanelDeliberation panelDeleberation;
+		panelDeleberation = new PanelDeliberation(dialog.getIdClasseChoisi());
+		/*
+		 * ajouter au centre du MainFrame
+		 */
+		mainFrame.addToCenter(mainFrame.getPanel(),panelDeleberation);
+		mainFrame.setTxtLabel("Classe : " +"");
+
+		
+		ModelTableDeliberation model = panelDeleberation.getModel();
+		//model.update(list, (String) dialog.getComboListModules().getCombo().getSelectedItem(),(String) dialog.getComboListClasses().getCombo().getSelectedItem());
+		
 	}
 
 	/**

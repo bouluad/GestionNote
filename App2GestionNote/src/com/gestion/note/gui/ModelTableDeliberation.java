@@ -12,6 +12,7 @@ import com.gestion.note.bll.GestionNotes;
 import com.gestion.note.bo.Etudiant;
 import com.gestion.note.bo.EtudiantNote;
 import com.gestion.note.bo.Matiere;
+import com.gestion.note.bo.Module;
 import com.gestion.note.bo.Note;
 import com.gestion.note.config.Configuration;
 import com.gestion.note.config.ConfigurationLoader;
@@ -39,33 +40,41 @@ public class ModelTableDeliberation extends AbstractTableModel
 
 	}
 	
-	public ModelTableDeliberation(List<String> st) {
+	public ModelTableDeliberation(Long idClasse) {
 		
-	/*	GestionModules lGestModules  = GestionModules.getInstance();	
+		GestionModules lGestModules  = GestionModules.getInstance();	
 		Long id = Long.valueOf(0);
-
 		
-		id = lGestModules.getModuleId(pIntitule);
-		
-		List<Matiere> listMatieres;
-		
-		List<Double> listNotes=new ArrayList<Double>();
-		
-			listMatieres = lGestModules.getMatieresModule(id);
-			matiereSize=listMatieres.size();*/
-		
-		colonnes.add("CNE");
-		colonnes.add("Nom");
-		colonnes.add("Prenom");
-		for (int i = 0; i < st.size(); i++) {
-			colonnes.add(st.get(i));
-		/*	if(){
-			colonnes.add("Moyenne");
-			colonnes.add("Validation");
-		}*/
-		colonnes.add("Moyenne generale");
-		colonnes.add("Validation de l'année");
+		try {
+			List<Module> listModules=lGestModules.getClasseModules(idClasse);
+			colonnes.add("CNE");
+			colonnes.add("Nom");
+			colonnes.add("Prenom");
+			
+			for(int i=0;i<listModules.size();i++)
+			{
+				List<Matiere> l=lGestModules.getMatieresModule(listModules.get(i).getId());
+				
+				for(int j=0;j<l.size();j++)
+				{
+					
+					colonnes.add(l.get(j).getIntitule());
+				}
+				colonnes.add("Moyenne");
+				colonnes.add("Validation");
+			}
+			
+			colonnes.add("Moyenne generale");
+			colonnes.add("Validation de l'année");
+			
+		} catch (DataBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 
 	
