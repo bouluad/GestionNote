@@ -4,12 +4,17 @@ import java.awt.GridLayout;
 import java.awt.print.PrinterException;
 import java.util.List;
 
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.Scrollable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister.Pack;
 
 public class PanelDeliberation extends JPanel implements TableModelListener
 {
@@ -47,12 +52,13 @@ public class PanelDeliberation extends JPanel implements TableModelListener
 		model = new ModelTableDeliberation(idClasse);
 		model.addTableModelListener(this);
 		dataTable = new JTable(model);
-
+		
 		dataTable.setFillsViewportHeight(true);
-
+		
 		JScrollPane scrol = new JScrollPane(dataTable);
 
 		add(scrol);
+		
 
 	}
 

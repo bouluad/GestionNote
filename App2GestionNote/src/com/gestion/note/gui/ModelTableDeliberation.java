@@ -205,6 +205,7 @@ public class ModelTableDeliberation extends AbstractTableModel
 	}
 	
 	
+	
 	public String getColumnName(int colonne) {
 		return colonnes.get(colonne);
 	}

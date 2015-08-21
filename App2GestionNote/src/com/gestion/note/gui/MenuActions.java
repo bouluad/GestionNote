@@ -1,5 +1,6 @@
 package com.gestion.note.gui;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -119,6 +120,8 @@ public class MenuActions extends AbstractAction {
 		DialogChoixClasse dialog = new DialogChoixClasse();
 		dialog.setVisible(true);
 		MainFrame mainFrame = (MainFrame) menu.getMenuContainer();
+		
+		mainFrame.getPanel().setLayout(new BorderLayout());
 		mainFrame.setDialogChoixClasse(dialog);
 		
 		PanelDeliberation panelDeleberation;
@@ -127,7 +130,7 @@ public class MenuActions extends AbstractAction {
 		 * ajouter au centre du MainFrame
 		 */
 		mainFrame.addToCenter(mainFrame.getPanel(),panelDeleberation);
-		mainFrame.setTxtLabel("Classe : " +"");
+		mainFrame.setTxtLabel("Classe : " +(String) dialog.getComboListClasses().getCombo().getSelectedItem());
 
 		
 		ModelTableDeliberation model = panelDeleberation.getModel();
