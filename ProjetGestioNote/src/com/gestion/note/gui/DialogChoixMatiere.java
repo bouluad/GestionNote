@@ -202,6 +202,7 @@ public class DialogChoixMatiere extends JDialog implements ItemListener, ActionL
 		GestionClasses lGsClasses=null;
 		lGsModules = GestionModules.getInstance();
 		lGsClasses=GestionClasses.getInstance();
+		
 		Object source = e.getSource();
 		if (source == comboListClasses.getCombo()) {
 
@@ -231,7 +232,7 @@ public class DialogChoixMatiere extends JDialog implements ItemListener, ActionL
 			try {
 				
 				String nommod =(String) comboListModules.getCombo().getSelectedItem();
-				Long idmod = lGsClasses.findid(nommod);
+				Long idmod = lGsModules.findid(nommod);
 				List<Matiere> listMa = lGsModules.getMatieresModule(idmod);
 				String[] matieres = new String[listMa.size()];
 

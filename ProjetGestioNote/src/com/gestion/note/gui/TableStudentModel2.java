@@ -70,7 +70,7 @@ public class TableStudentModel2 extends AbstractTableModel
 						Configuration.getInstance().getPropertie().getAnneeuniv());
 
 			} catch (ElementNotFoundException e) {
-				
+				//TODO
 			}
 			
 		GestionModules lGestModules  = GestionModules.getInstance();	
