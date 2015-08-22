@@ -16,14 +16,10 @@ import com.gestion.note.bo.Matiere;
 import com.gestion.note.bo.Module;
 import com.gestion.note.bo.Note;
 import com.gestion.note.config.Configuration;
-import com.gestion.note.config.ConfigurationLoader;
 import com.gestion.note.db.DataBaseException;
 
 
-
-
 // Model de la table deleberation
-
 
 
 public class ModelTableDeliberation extends AbstractTableModel
@@ -95,6 +91,7 @@ public class ModelTableDeliberation extends AbstractTableModel
 		for (int i = 0; i < listStudents.size(); i++) {
 			EtudiantNote lEtNote = null;
 			List<String> modulesNotes=new ArrayList<String>();
+			Double moyenneGenerale=0.0;
 			
 			System.out.println("etu :"+listStudents.get(i).getNom());
 			for(int j=0;j<listModules.size();j++){
@@ -124,6 +121,7 @@ public class ModelTableDeliberation extends AbstractTableModel
 				try {
 					moyenn = gsNotes.calculateMoyenne((long)listStudents.get(i).getId().intValue(),(long)listModules.get(j).getId(),
 							Configuration.getInstance().getPropertie().getAnneeuniv());
+					moyenneGenerale+=moyenn;
 					modulesNotes.add(moyenn.toString());
 	
 				} catch (ElementNotFoundException e) {
@@ -135,7 +133,11 @@ public class ModelTableDeliberation extends AbstractTableModel
 			//lGestModules.updateMoyenneModule((long)listStudents.get(i).getId().intValue(), id, moyenn, testValidation(moyenn, className));
 
 			}
-			tableSize=modulesNotes.size();			
+			moyenneGenerale=moyenneGenerale/listModules.size();
+			modulesNotes.add(moyenneGenerale.toString());
+			modulesNotes.add(testValidation(moyenneGenerale, lGestClasse.getClasseById(idClasse).getNom()));
+			tableSize=modulesNotes.size();
+			
 			lEtNote = new EtudiantNote(listStudents.get(i), modulesNotes);
 			lignes.add(lEtNote);
 
@@ -150,9 +152,7 @@ public class ModelTableDeliberation extends AbstractTableModel
 	}
 	
 	private String testValidation(double m,String className) throws DataBaseException, ElementNotFoundException{
-		
-	
-		
+			
 		if(className.startsWith("C") && (m>=Configuration.getInstance().getPropertie().getSeuilCp()))
 			return "V";
 		if(className.startsWith("C") && (m<Configuration.getInstance().getPropertie().getSeuilCp()))
@@ -168,6 +168,7 @@ public class ModelTableDeliberation extends AbstractTableModel
 		
 		GestionNotes lGestNotes = GestionNotes.getInstance();
 		Note note=lGestNotes.getNotes(idMat, idEt, annee);
+		
 		if(note.getNoteSN()<0 && note.getNoteSR()<0){
 			return -99.0;
 			
@@ -201,6 +202,7 @@ public class ModelTableDeliberation extends AbstractTableModel
 			
 			return e.getModules().get(colonne-3);
 		}
+		
 //		if(colonne >=3 && colonne < matiereSize+3){
 //			return e.getNote(colonne-3);
 //		}		
