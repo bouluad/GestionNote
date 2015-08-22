@@ -7,6 +7,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
 import com.gestion.note.bll.ElementNotFoundException;
+import com.gestion.note.bll.GestionClasses;
 import com.gestion.note.bll.GestionModules;
 import com.gestion.note.bll.GestionNotes;
 import com.gestion.note.bo.Etudiant;
@@ -33,7 +34,7 @@ public class ModelTableDeliberation extends AbstractTableModel
 	/** les données du tableau */
 	private List<EtudiantNote> lignes = new ArrayList<EtudiantNote>();
 	
-	
+	private int tableSize=0;
 	private int matiereSize=0;
 	
 	public ModelTableDeliberation() {
@@ -78,46 +79,64 @@ public class ModelTableDeliberation extends AbstractTableModel
 	}
 
 	
-	public void update(List<Etudiant> listStudents, String pIntitule,String className) throws DataBaseException, ElementNotFoundException {
-
+	public void update(List<Etudiant> listStudents, Long idClasse) throws DataBaseException, ElementNotFoundException {
+		
+		
 		// Effacer la liste
 		lignes.clear();
-		Long id = Long.valueOf(0);
-		id = GestionModules.getInstance().getModuleId(pIntitule);
-
-		GestionNotes gsNotes = GestionNotes.getInstance();
-		int i;
-		for (i = 0; i < listStudents.size(); i++) {
-			Double moyenn = null;
-			
-			EtudiantNote lEtNote = null;
-			try {
-				moyenn = gsNotes.calculateMoyenne((long)listStudents.get(i).getId().intValue(),(long)id,
-						Configuration.getInstance().getPropertie().getAnneeuniv());
-
-			} catch (ElementNotFoundException e) {
-				
-			}
-			
 		GestionModules lGestModules  = GestionModules.getInstance();	
-		List<Matiere> listMatieres;
+		GestionNotes gsNotes = GestionNotes.getInstance();
+		GestionClasses lGestClasse  = GestionClasses.getInstance();	
+
+
+		List<Module> listModules=lGestModules.getClasseModules(idClasse);
+
 		
-		List<Double> listNotes=new ArrayList<Double>();
-		try {
-			listMatieres = lGestModules.getMatieresModule(id);
-			matiereSize=listMatieres.size();
-			for(int j=0;j<listMatieres.size();j++){
-				listNotes.add(getNoteByIdEtAndMat((long)listStudents.get(i).getId().intValue(),(long)listMatieres.get(j).getId().intValue(),Configuration.getInstance().getPropertie().getAnneeuniv()));
-				System.out.println("note:"+getNoteByIdEtAndMat((long)listStudents.get(i).getId().intValue(),(long)listMatieres.get(j).getId().intValue(), Integer.parseInt(ConfigurationLoader.MAPCONFIG.get(ConfigurationLoader.ANNEE_UNIV))));
+		for (int i = 0; i < listStudents.size(); i++) {
+			EtudiantNote lEtNote = null;
+			List<String> modulesNotes=new ArrayList<String>();
+			
+			System.out.println("etu :"+listStudents.get(i).getNom());
+			for(int j=0;j<listModules.size();j++){
+				System.out.println("mat :"+listModules.get(j).getIntitule());
+
+				List<Matiere> listMatieres;
+				
+				try {
+					listMatieres = lGestModules.getMatieresModule((long)listModules.get(j).getId());
+					matiereSize=listMatieres.size();
+					
+					for(int k=0;k<listMatieres.size();k++){
+						
+						System.out.println("mat :"+listMatieres.get(k).getIntitule());
+						Double noteM=getNoteByIdEtAndMat((long)listStudents.get(i).getId().intValue(),(long)listMatieres.get(k).getId().intValue()
+								,Configuration.getInstance().getPropertie().getAnneeuniv());
+						
+						modulesNotes.add(noteM.toString());
+					}
+					
+				} catch (ElementNotFoundException e) {
+					e.printStackTrace();
+				}
+				
+				
+				Double moyenn = null;
+				try {
+					moyenn = gsNotes.calculateMoyenne((long)listStudents.get(i).getId().intValue(),(long)listModules.get(j).getId(),
+							Configuration.getInstance().getPropertie().getAnneeuniv());
+					modulesNotes.add(moyenn.toString());
+	
+				} catch (ElementNotFoundException e) {
+					//TODO
+				}	
+				
+				modulesNotes.add(testValidation(moyenn, lGestClasse.getClasseById(idClasse).getNom()));	
+			//TODO	
+			//lGestModules.updateMoyenneModule((long)listStudents.get(i).getId().intValue(), id, moyenn, testValidation(moyenn, className));
+
 			}
-			
-		} catch (ElementNotFoundException e) {
-			e.printStackTrace();
-		}
-			
-			lGestModules.updateMoyenneModule((long)listStudents.get(i).getId().intValue(), id, moyenn, testValidation(moyenn, className));
-			
-			lEtNote = new EtudiantNote(listStudents.get(i), listNotes,moyenn,testValidation(moyenn, className));
+			tableSize=modulesNotes.size();			
+			lEtNote = new EtudiantNote(listStudents.get(i), modulesNotes);
 			lignes.add(lEtNote);
 
 			// Signaler la modification des données du modèle
@@ -177,29 +196,34 @@ public class ModelTableDeliberation extends AbstractTableModel
 		if(colonne == 1) 	return e.getNom();
 		if(colonne == 2) 	return e.getPrenom();
 		
-		if(colonne >=3 && colonne < matiereSize+3){
-			return e.getNote(colonne-3);
-		}		
-		if(colonne== matiereSize+3) {
-			boolean test=true;
-			for(int i=0;i<matiereSize;i++){
-				
-				if(e.getNote(i)==-99) test=false;
-			}
-			if(test)
-				return e.getMoyenne();
-			else return -99.0;
+		
+		if(colonne >=3 && colonne < tableSize+3) {
+			
+			return e.getModules().get(colonne-3);
 		}
-		if(colonne == matiereSize+4) {
-			boolean test=true;
-			for(int i=0;i<matiereSize;i++){
-				
-				if(e.getNote(i)==-99) test=false;
-			}
-			if(test)
-				return e.getValidation();
-			else return "undefined";
-		}
+//		if(colonne >=3 && colonne < matiereSize+3){
+//			return e.getNote(colonne-3);
+//		}		
+//		if(colonne== matiereSize+3) {
+//			boolean test=true;
+//			for(int i=0;i<matiereSize;i++){
+//				
+//				if(e.getNote(i)==-99) test=false;
+//			}
+//			if(test)
+//				return e.getMoyenne();
+//			else return -99.0;
+//		}
+//		if(colonne == matiereSize+4) {
+//			boolean test=true;
+//			for(int i=0;i<matiereSize;i++){
+//				
+//				if(e.getNote(i)==-99) test=false;
+//			}
+//			if(test)
+//				return e.getValidation();
+//			else return "undefined";
+//		}
 		else return null;
 		
 	}

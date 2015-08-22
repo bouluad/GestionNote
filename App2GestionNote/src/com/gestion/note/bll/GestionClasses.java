@@ -271,6 +271,46 @@ return lId;
 
 	}
 	
+	
+	public List<Etudiant> getClasseStudents(Long pId) throws DataBaseException,
+	ElementNotFoundException {
+
+Connection connect = DBConnection.getInstance();
+List<Etudiant> lList = new ArrayList<Etudiant>();
+
+try {
+
+	PreparedStatement findStatement = connect
+			.prepareStatement("SELECT distinct e.nom,prénom,cne,cin,dateNais,lieuNais,  e.Etudiant_ID FROM "
+					+ "etudiant e where e.Classe_ID = ?");
+	
+	findStatement.setLong(1, pId);
+	ResultSet result = findStatement.executeQuery();
+	while (result.next()) {
+		String nom = result.getString("NOM");
+		String prenom = result.getString("prénom");
+		String cin = result.getString("cin");
+		String cne = result.getString("cne");
+		Date dateNais = result.getDate("dateNais");
+		String lieuNais = result.getString("lieuNais");
+		int id = result.getInt("Etudiant_ID");
+		Etudiant lStd = new Etudiant(Long.valueOf(id), nom, prenom, cne, cin, dateNais, lieuNais);
+		lList.add(lStd);
+	}
+
+} catch (SQLException e) {
+	LOG.error("Erreur lors d'une opération sur la base de données :" + e);
+	throw new DataBaseException("Erreur lors d'une opération sur la base de données", e);
+
+}
+
+if (lList.size() == 0)
+	throw new ElementNotFoundException("No record found in database ");
+
+return lList;
+
+}
+	
 	/**
 	 * Methode retourner une classe apartir de son id
 	 * @return

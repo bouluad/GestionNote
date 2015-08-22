@@ -17,6 +17,7 @@ import com.gestion.note.bll.ElementNotFoundException;
 import com.gestion.note.bll.GestionClasses;
 import com.gestion.note.bo.Classe;
 import com.gestion.note.bo.Etudiant;
+import com.gestion.note.config.Configuration;
 import com.gestion.note.db.DataBaseException;
 
 /**
@@ -33,6 +34,8 @@ public class DialogChoixClasse extends JDialog implements ItemListener, ActionLi
 	private JButton validerButton = new JButton("Valdier");
 	private JButton annulerButton = new JButton("Annuler");
 	private Long idClasseChoisi;
+	private List<Etudiant> listStudents = new ArrayList<Etudiant>();
+
 	
 
 	/**
@@ -99,7 +102,15 @@ public class DialogChoixClasse extends JDialog implements ItemListener, ActionLi
 			String selected = (String) comboListClasses.getCombo().getSelectedItem();
 
 			try {
-			
+				listStudents = GestionClasses.getInstance().getClasseStudents(GestionClasses.getInstance().findid(selected));
+			} catch (DataBaseException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			} catch (ElementNotFoundException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
+			try {
 				idClasseChoisi = GestionClasses.getInstance().findid(selected);
 			
 				setVisible(false);
@@ -149,6 +160,14 @@ public class DialogChoixClasse extends JDialog implements ItemListener, ActionLi
 
 	public void setIdClasseChoisi(Long idClasseChoisi) {
 		this.idClasseChoisi = idClasseChoisi;
+	}
+
+	public List<Etudiant> getListStudents() {
+		return listStudents;
+	}
+
+	public void setListStudents(List<Etudiant> listStudents) {
+		this.listStudents = listStudents;
 	}
 
 

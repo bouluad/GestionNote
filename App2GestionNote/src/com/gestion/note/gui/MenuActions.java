@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import com.gestion.note.bll.ElementNotFoundException;
+import com.gestion.note.bo.Etudiant;
 import com.gestion.note.db.DataBaseException;
 
 
@@ -115,7 +116,7 @@ public class MenuActions extends AbstractAction {
 	
 
 	
-	public void openSaisie() throws DataBaseException
+	public void openSaisie() throws DataBaseException, ElementNotFoundException
 	{
 		DialogChoixClasse dialog = new DialogChoixClasse();
 		dialog.setVisible(true);
@@ -132,9 +133,9 @@ public class MenuActions extends AbstractAction {
 		mainFrame.addToCenter(mainFrame.getPanel(),panelDeleberation);
 		mainFrame.setTxtLabel("Classe : " +(String) dialog.getComboListClasses().getCombo().getSelectedItem());
 
-		
+		List<Etudiant> list = dialog.getListStudents();
 		ModelTableDeliberation model = panelDeleberation.getModel();
-		//model.update(list, (String) dialog.getComboListModules().getCombo().getSelectedItem(),(String) dialog.getComboListClasses().getCombo().getSelectedItem());
+		model.update(list,dialog.getIdClasseChoisi());
 		
 	}
 

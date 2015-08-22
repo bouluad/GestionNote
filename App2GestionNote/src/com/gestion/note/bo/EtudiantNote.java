@@ -14,10 +14,10 @@ public class EtudiantNote extends Etudiant {
 	private Note note;
 	private Module module;
 	private double moyenne;
-	
 	private List<Double> notes=new ArrayList<Double>();
-	
 	private String validation;
+	
+	private List<String> modules=new ArrayList<String>();
 
 	public EtudiantNote(Etudiant e, double moyenne) {
 		super(e);
@@ -72,6 +72,11 @@ public class EtudiantNote extends Etudiant {
 		note = pNote;
 	}
 
+	public EtudiantNote(Etudiant e, List<String> modulesNotes) {
+		super(e);
+		this.modules=modulesNotes;
+	}
+
 	public Note getNote() {
 		return note;
 	}
@@ -92,5 +97,13 @@ public class EtudiantNote extends Etudiant {
 		this.validation = validation;
 	}
 
+	public List<String> getModules() {
+		return modules;
+	}
 
+	public void setModules(List<String> modules) {
+		this.modules = modules;
+	}
+
+	
 }
