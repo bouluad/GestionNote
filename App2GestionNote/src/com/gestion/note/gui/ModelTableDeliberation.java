@@ -17,6 +17,7 @@ import com.gestion.note.bo.Module;
 import com.gestion.note.bo.Note;
 import com.gestion.note.config.Configuration;
 import com.gestion.note.db.DataBaseException;
+import com.gestion.note.outils.headerLine;
 
 
 // Model de la table deleberation
@@ -44,7 +45,8 @@ public class ModelTableDeliberation extends AbstractTableModel
 		
 		try {
 			List<Module> listModules=lGestModules.getClasseModules(idClasse);
-			colonnes.add("CNE");
+			
+			colonnes.add("<html>CNE"+"<br/>."+"</html>");
 			colonnes.add("Nom");
 			colonnes.add("Prenom");
 			
@@ -54,15 +56,18 @@ public class ModelTableDeliberation extends AbstractTableModel
 				
 				for(int j=0;j<l.size();j++)
 				{
+					//l.get(j).getIntitule()
 					
-					colonnes.add(l.get(j).getIntitule());
+					
+				headerLine hl=new headerLine(l.get(j).getIntitule());
+					colonnes.add("<html>"+hl.getT()+"<br/>"+hl.getT2()+"</html>");
 				}
 				colonnes.add("Moyenne");
 				colonnes.add("Validation");
 			}
 			
-			colonnes.add("Moyenne generale");
-			colonnes.add("Validation de l'année");
+			colonnes.add("<html>Moyenne<br/>generale</html>");
+			colonnes.add("<html>Validation<br/> de l'année</html>");
 			
 		} catch (DataBaseException e) {
 			// TODO Auto-generated catch block

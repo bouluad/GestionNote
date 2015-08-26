@@ -2,19 +2,14 @@ package com.gestion.note.gui;
 
 import java.awt.GridLayout;
 import java.awt.print.PrinterException;
-import java.util.List;
-
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.Scrollable;
+import javax.swing.JViewport;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
-
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister.Pack;
 
 public class PanelDeliberation extends JPanel implements TableModelListener
 {
@@ -36,11 +31,9 @@ public class PanelDeliberation extends JPanel implements TableModelListener
 		model = new ModelTableDeliberation();
 		model.addTableModelListener(this);
 		dataTable = new JTable(model);
-
+		dataTable.setAutoResizeMode( JTable.AUTO_RESIZE_OFF);
 		dataTable.setFillsViewportHeight(true);
-
-		JScrollPane scrol = new JScrollPane(dataTable);
-
+		JScrollPane scrol = new JScrollPane(dataTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		add(scrol);
 
 	}
