@@ -21,7 +21,7 @@ import com.gestion.note.outils.headerLine;
 
 
 // Model de la table deleberation
-
+//tout matieres
 
 public class ModelTableDeliberation extends AbstractTableModel
 {   
