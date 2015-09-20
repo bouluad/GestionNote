@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
@@ -153,6 +154,8 @@ public class MainFrame extends JFrame {
     	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.EAST);
       	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.SOUTH);
     	panel.add(table, BorderLayout.CENTER);
+    	JScrollPane scrol = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+    	getContentPane().add(scrol);
     	revalidate();
     }
     

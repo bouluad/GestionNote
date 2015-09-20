@@ -48,7 +48,7 @@ public class PanelDeliberation extends JPanel implements TableModelListener
 		dataTable.setFillsViewportHeight(true);
 		dataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-		JScrollPane scrol = new JScrollPane(dataTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		JScrollPane scrol = new JScrollPane(dataTable);
 
 		add(scrol);
 		
