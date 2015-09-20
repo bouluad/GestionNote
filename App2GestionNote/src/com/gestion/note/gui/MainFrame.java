@@ -136,14 +136,17 @@ public class MainFrame extends JFrame {
     	validate();
     }
     
-    public void addToCenter(JPanel panel,JPanel table)
+    public void addToCenter(JPanel panel,JPanel table, JPanel models)
     {
     	panel.removeAll();
     	panel.repaint();
     	
     	JPanel pnlHeaderJPanel=new JPanel();
-	
-		pnlHeaderJPanel.add(lblHeader);
+    	
+	pnlHeaderJPanel.setLayout(new FlowLayout(FlowLayout.LEFT,350,0));
+		//pnlHeaderJPanel.add(lblHeader);
+		
+		pnlHeaderJPanel.add(models);
     	
     	panel.add(pnlHeaderJPanel,BorderLayout.NORTH);
     	panel.add(Box.createRigidArea(new Dimension (15,15)),BorderLayout.WEST);

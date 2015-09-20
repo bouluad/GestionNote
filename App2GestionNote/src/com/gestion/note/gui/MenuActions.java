@@ -127,10 +127,18 @@ public class MenuActions extends AbstractAction {
 		
 		PanelDeliberation panelDeleberation;
 		panelDeleberation = new PanelDeliberation(dialog.getIdClasseChoisi());
+		
+		ModelsPanel modelsPanel;
+		modelsPanel = new ModelsPanel(dialog.getIdClasseChoisi());
+		
+		
 		/*
 		 * ajouter au centre du MainFrame
 		 */
-		mainFrame.addToCenter(mainFrame.getPanel(),panelDeleberation);
+		mainFrame.addToCenter(mainFrame.getPanel(),panelDeleberation,modelsPanel);
+		
+		//mainFrame.addToCenter(mainFrame.getPanel(),modelsPanel);
+		
 		mainFrame.setTxtLabel("Classe : " +(String) dialog.getComboListClasses().getCombo().getSelectedItem());
 
 		List<Etudiant> list = dialog.getListStudents();
