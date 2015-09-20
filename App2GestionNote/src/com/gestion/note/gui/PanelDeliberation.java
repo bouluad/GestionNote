@@ -6,7 +6,6 @@ import java.awt.print.PrinterException;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JViewport;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -15,7 +14,7 @@ public class PanelDeliberation extends JPanel implements TableModelListener
 {
 
 	/** Le tableau */
-	private JTable dataTable;
+	private TableModel1 dataTable;
 
 	/** Le modèle du tableau */
 	private ModelTableDeliberation model;
@@ -30,7 +29,7 @@ public class PanelDeliberation extends JPanel implements TableModelListener
 
 		model = new ModelTableDeliberation();
 		model.addTableModelListener(this);
-		dataTable = new JTable(model);
+		dataTable = new TableModel1(model);
 		dataTable.setAutoResizeMode( JTable.AUTO_RESIZE_OFF);
 		dataTable.setFillsViewportHeight(true);
 		JScrollPane scrol = new JScrollPane(dataTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -44,11 +43,12 @@ public class PanelDeliberation extends JPanel implements TableModelListener
 
 		model = new ModelTableDeliberation(idClasse);
 		model.addTableModelListener(this);
-		dataTable = new JTable(model);
+		dataTable = new TableModel1(model);
 		
 		dataTable.setFillsViewportHeight(true);
-		
-		JScrollPane scrol = new JScrollPane(dataTable);
+		dataTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+		JScrollPane scrol = new JScrollPane(dataTable,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
 		add(scrol);
 		
@@ -87,7 +87,7 @@ public class PanelDeliberation extends JPanel implements TableModelListener
 		return dataTable;
 	}
 
-	public void setDataTable(JTable dataTable) {
+	public void setDataTable(TableModel1 dataTable) {
 		this.dataTable = dataTable;
 	}
 
