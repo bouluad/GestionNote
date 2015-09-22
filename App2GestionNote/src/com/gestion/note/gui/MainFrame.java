@@ -144,7 +144,7 @@ public class MainFrame extends JFrame {
     	
     	JPanel pnlHeaderJPanel=new JPanel();
     	
-	pnlHeaderJPanel.setLayout(new FlowLayout(FlowLayout.LEFT,350,0));
+	pnlHeaderJPanel.setLayout(new FlowLayout(FlowLayout.LEFT,400,0));
 		//pnlHeaderJPanel.add(lblHeader);
 		
 		pnlHeaderJPanel.add(models);

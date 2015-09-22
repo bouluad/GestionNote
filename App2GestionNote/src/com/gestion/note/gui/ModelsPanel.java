@@ -1,12 +1,12 @@
 package com.gestion.note.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.List;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -23,16 +23,19 @@ public class ModelsPanel extends JPanel{
 	
 	public ModelsPanel(Long idClasse) {
 		try {
+			
+
 			List<Module> listModules=lGestModules.getClasseModules(idClasse);
+			this.setLayout(new GridLayout(1, listModules.size(), 400, 10));
 			modules=new JLabel[listModules.size()];
-	    	add(Box.createRigidArea(new Dimension (50,0)),BorderLayout.EAST);
+	    //	add(Box.createRigidArea(new Dimension (50,0)),BorderLayout.EAST);
 			for(int i=0;i<listModules.size();i++)
 			{
 				modules[i]=new JLabel(listModules.get(i).getIntitule());
 				System.out.println(listModules.get(i).getIntitule()+"11111111111111111111111111111111111111");
 				add(modules[i]);
 		    	
-				add(Box.createRigidArea(new Dimension (220,0)),BorderLayout.EAST);
+				//add(Box.createRigidArea(new Dimension (220,0)),BorderLayout.EAST);
 
 				
 			}
